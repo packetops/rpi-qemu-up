@@ -9,13 +9,16 @@ if [ $# -ne 1 ] ; then
 fi
 
 function fetch {
-    raspbian_zip=2014-12-24-wheezy-raspbian.zip
-    raspbian_url=http://downloads.raspberrypi.org/raspbian/images/raspbian-2014-12-25/$raspbian_filename
-    qemu_kernel=http://xecdesign.com/downloads/linux-qemu/kernel-qemu
+    #raspbian_zip=2014-12-24-wheezy-raspbian.zip
+    raspbian_zip=2015-11-21-raspbian-jessie.zip
+    #raspbian_url=http://downloads.raspberrypi.org/raspbian/images/raspbian-2014-12-25/$raspbian_filename
+    raspbian_url=http://downloads.raspberrypi.org/raspbian/images/raspbian-2015-11-24/$raspbian_filename
+    #qemu_kernel=http://xecdesign.com/downloads/linux-qemu/kernel-qemu
+    qemu_kernel=https://github.com/dhruvvyas90/qemu-rpi-kernel/raw/master/kernel-qemu-4.1.7-jessie
     pushd resources
     wget $qemu_kernel -O qemu-kernel
     # If the checksum fails for whatever reason, just get another file
-    shasum -a 1 -c $raspbian_zip.sha1 || wget $raspbian_url -O $raspbian_zip
+    shasum -a 1 -c $raspbian_zip.sha1 || wget -R $raspbian_url -O $raspbian_zip
     shasum -a 1 -c $raspbian_zip.sha1
     unzip $raspbian_zip
     popd
